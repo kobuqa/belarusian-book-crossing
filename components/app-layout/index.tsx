@@ -27,7 +27,7 @@ export default function Layout({ children }: LayoutProps) {
                     )
                     }
                 </header>
-                <main className="flex grow px-10">
+                <main className="flex grow">
                     {children}
                 </main>
             </div>
