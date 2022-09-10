@@ -70,8 +70,10 @@ const Home: NextPage = ({ data }) => {
                   <Popup>
                     <p>Аўтар: {book.author}</p>
                     <p>Назва: {book.title}</p>
-                    <p>Кантакты: {book.contacts}</p>
                     <p>Год: {book.year ? book.year : 'Няма'}</p>
+                    <p>Кантакты: {book.contacts}</p>
+                    <p>Статус: дазнацца ва ўладальніка</p>
+                    <p>Умовы: дазнацца ва ўладальніка</p>
                     <Link href={`/books/${book.id}`}>Зрабіць запыт на кнігу</Link>
                   </Popup>
                 </Marker>
