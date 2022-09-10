@@ -80,6 +80,9 @@ const Home: NextPage = ({ data }) => {
           )}
         </Map>
       </div>
+      <div style="text-align: center">
+        <a href='https://www.patreon.com/belarusian_book_crossing'>Падтрымаць праект</a>
+      </div>
     </Layout>
   )
 }
