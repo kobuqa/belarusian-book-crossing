@@ -11,7 +11,6 @@ import { useGeolocated } from 'react-geolocated'
 import { useBook } from '../lib/api/useBook'
 import axios from 'axios'
 import https from 'https'
-import Link from 'next/link'
 const DEFAULT_CENTER = [38.907132, -77.036546]
 
 const Home: NextPage = ({ data }) => {
