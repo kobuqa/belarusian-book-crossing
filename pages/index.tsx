@@ -7,6 +7,7 @@ import Map from '../components/map'
 import AddBookPopup from '../components/add-book-popup'
 import TextField from '../lib/components/text-field'
 import Link from 'next/link'
+import Image from 'next/image';
 import { useGeolocated } from 'react-geolocated'
 import { useBook } from '../lib/api/useBook'
 import axios from 'axios'
@@ -45,6 +46,7 @@ const Home: NextPage = ({ data }) => {
       <AddBookPopup isOpen={isOpen} onSuccess={addBook} onClose={() => setIsOpen(false)} />
       <div className="flex flex-col min-w-full">
         <div className="flex flex-col grow items-center gap-y-10">
+          <Image src="/logo.png" width={349} height={88} alt="Belarusian Book Crossing"/>
           <div className="flex gap-x-4">
             <TextField placeholder='Start typing' onChange={handleChangeFilterValue} value={filterValue} />
             <div className="flex border border-black rounded-lg overflow-hidden">
