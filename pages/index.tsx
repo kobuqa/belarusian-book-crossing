@@ -9,7 +9,8 @@ import TextField from '../lib/components/text-field'
 import Link from 'next/link'
 import { useGeolocated } from 'react-geolocated'
 import { useBook } from '../lib/api/useBook'
-
+import axios from 'axios'
+import https from 'https'
 
 const DEFAULT_CENTER = [38.907132, -77.036546]
 
@@ -91,10 +92,11 @@ const Home: NextPage = ({ data }) => {
 
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await fetch(`${process.env.API_URL}/books`)
-  const data = await res.json()
-
+  const res = await axios.get(`${process.env.API_URL}/books`, {
+    httpsAgent: new https.Agent({
+    })
+  })
   // Pass data to the page via props
-  return { props: { data } }
+  return { props: { data: res.data } }
 }
 export default Home
