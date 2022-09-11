@@ -17,7 +17,7 @@ export const useBook = () => {
         }),
       }
     );
-    if (update.status == 200) router.replace(router.asPath);
+    // if (update.status == 200) router.replace(router.asPath);
   };
 
   return {
