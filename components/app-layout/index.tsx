@@ -9,12 +9,16 @@ type LayoutProps = {
 };
 export default function Layout({ children }: LayoutProps) {
     const { data } = useSession()
+    const router = useRouter()
 
     return (
         <>
             <div className="min-h-screen flex flex-col">
                 <header className="flex justify-between p-2">
-                    <nav>
+                    <nav className="flex">
+                        <li className="bg-gray-200 hover:bg-gray-300 p-3 border-r border-r-gray-300 cursor-pointer" onClick={() => router.push('/')}>Галоуная</li>
+                        <li className="bg-gray-200 hover:bg-gray-300 p-3 border-r border-r-gray-300 cursor-pointer" onClick={() => router.push('/map')}>Мапа</li>
+                        <li className="bg-gray-200 hover:bg-gray-300 p-3 cursor-pointer" onClick={() => router.push('/about')}>А нас</li>
                     </nav>
                     {data && (
                         <>
