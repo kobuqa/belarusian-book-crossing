@@ -19,8 +19,8 @@ function AddBookPopup({ isOpen, onSuccess, onClose }: any) {
         title: '',
         author: '',
         isbn: '',
-        latitude: 38.957132 + Math.random() / 100,
-        longitude: -77.036546 + Math.random() / 100,
+        latitude: (coords ? coords.latitude : 31.02) + Math.random() / 100,
+        longitude: (coords ? coords.longitude : 72) + Math.random() / 100,
         city: '',
         country: '',
         additional: '',
@@ -34,8 +34,8 @@ function AddBookPopup({ isOpen, onSuccess, onClose }: any) {
             title: '',
             author: '',
             isbn: '',
-            latitude: 38.957132 + Math.random() / 100,
-            longitude: -77.036546 + Math.random() / 100,
+            latitude: (coords ? coords.latitude : 31.02) + Math.random() / 100,
+            longitude: (coords ? coords.longitude : 72) + Math.random() / 100,
             city: '',
             country: '',
             additional: '',
@@ -46,7 +46,7 @@ function AddBookPopup({ isOpen, onSuccess, onClose }: any) {
     }
 
     useEffect(() => {
-        setFormValue(prev => ({ ...prev, latitude: coords ? coords.latitude : 31.02 + Math.random() / 100, longitude: coords ? coords.longitude : 72 + Math.random() / 100 }))
+        setFormValue(prev => ({ ...prev, latitude: (coords ? coords.latitude : 31.02) + Math.random() / 100, longitude: (coords ? coords.longitude : 72) + Math.random() / 100 }))
     }, [coords?.latitude, coords?.longitude, coords])
 
     return (
