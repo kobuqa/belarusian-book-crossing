@@ -12,6 +12,7 @@ export const useBook = () => {
       "https://bookcrossing.hopto.org/api/books",
       book,
       {
+        withCredentials: false,
         httpsAgent: new https.Agent({
           rejectUnauthorized: false,
         }),
