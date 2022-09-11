@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Layout from '../components/app-layout'
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function About() {
   return (
@@ -25,7 +26,7 @@ export default function About() {
             <label htmlFor="fid-1" className="peer-checked:bg-gray-300 p-2 w-28">Як гэта працуе?</label>
             <br/>
             <br/>
-            <label htmlFor="fid-1" className="peer-checked:bg-gray-300 p-2 w-28">Пераходзь на старонку з <a href="/">мапай</a> і карыстайся пошукам. Ты можаш узяць кніжку па прынцыпе book crossing, часова пазычыць яе, абмяняцца на іншую ці нават пераслаць у іншую краіну поштай.</label>
+            <label htmlFor="fid-1" className="peer-checked:bg-gray-300 p-2 w-28">Пераходзь на старонку з <Link href="/">мапай</Link> і карыстайся пошукам. Ты можаш узяць кніжку па прынцыпе book crossing, часова пазычыць яе, абмяняцца на іншую ці нават пераслаць у іншую краіну поштай.</label>
           </div>
           <br/>
           <br/>
