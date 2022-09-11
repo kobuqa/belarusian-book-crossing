@@ -16,9 +16,9 @@ export default function Layout({ children }: LayoutProps) {
             <div className="min-h-screen flex flex-col">
                 <header className="flex justify-between p-2">
                     <nav className="flex">
-                        <li className="bg-gray-200 hover:bg-gray-300 p-3 border-r border-r-gray-300 cursor-pointer" onClick={() => router.push('/')}>Галоуная</li>
+                        <li className="bg-gray-200 hover:bg-gray-300 p-3 border-r border-r-gray-300 cursor-pointer" onClick={() => router.push('/')}>Галоўная</li>
                         <li className="bg-gray-200 hover:bg-gray-300 p-3 border-r border-r-gray-300 cursor-pointer" onClick={() => router.push('/map')}>Мапа</li>
-                        <li className="bg-gray-200 hover:bg-gray-300 p-3 cursor-pointer" onClick={() => router.push('/about')}>А нас</li>
+                        <li className="bg-gray-200 hover:bg-gray-300 p-3 cursor-pointer" onClick={() => router.push('/about')}>Пра нас</li>
                     </nav>
                     {data && (
                         <>
