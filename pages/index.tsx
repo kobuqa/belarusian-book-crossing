@@ -91,12 +91,12 @@ const Home: NextPage = ({ data }) => {
 
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await axios.get(`${process.env.API_URL}/books`, {
-    httpsAgent: new https.Agent({
-      rejectUnauthorized: false
-    })
-  })
+  // const res = await axios.get(`${process.env.API_URL}/books`, {
+  //   httpsAgent: new https.Agent({
+  //     rejectUnauthorized: false
+  //   })
+  // })
   // Pass data to the page via props
-  return { props: { data: res.data } }
+  return { props: { data: [] } }
 }
 export default Home
