@@ -11,7 +11,6 @@ import { useGeolocated } from 'react-geolocated'
 import { useBook } from '../lib/api/useBook'
 import axios from 'axios'
 import https from 'https'
-const DEFAULT_CENTER = [38.907132, -77.036546]
 
 const Home: NextPage = ({ data }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -37,6 +36,7 @@ const Home: NextPage = ({ data }) => {
     setFilteredBooks(() => filterValue ? books.filter(book => book[filterMode] && book[filterMode].toLowerCase().includes(filterValue.toLowerCase())) : books)
   }, [filterValue, filterMode, books])
 
+
   return (
     <Layout>
       <Head>
@@ -59,29 +59,32 @@ const Home: NextPage = ({ data }) => {
             </div>
           </div>
           <button className="border border-black p-2 rounded-lg" onClick={() => setIsOpen(true)}>Дадаць кнігу</button>
-          <Map className="w-full h-[40rem]" center={coords ? [coords.latitude, coords.longitude] : DEFAULT_CENTER} zoom={5}>
-            {({ TileLayer, Marker, Popup }) => (
-              <>
-                <TileLayer
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-                />
-                {filteredBooks.map(book => (
-                  <Marker position={[book.latitude, book.longitude]} key={book.id}>
-                    <Popup>
-                      <p>Аўтар: {book.author}</p>
-                      <p>Назва: {book.title}</p>
-                      <p>Год: {book.year ? book.year : 'Няма'}</p>
-                      <p>Кантакты: {book.contacts}</p>
-                      <p>Статус: дазнацца ва ўладальніка</p>
-                      <p>Умовы: дазнацца ва ўладальніка</p>
-                      <Link href={`/books/${book.id}`}>Зрабіць запыт на кнігу</Link>
-                    </Popup>
-                  </Marker>
-                ))}
-              </>
-            )}
-          </Map>
+          {coords ?
+            (<Map className="w-full h-[40rem]" center={[coords.latitude, coords.longitude]} zoom={6}>
+              {({ TileLayer, Marker, Popup }) => (
+                <>
+                  <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                  />
+                  {filteredBooks.map(book => (
+                    <Marker position={[book.latitude, book.longitude]} key={book.id}>
+                      <Popup>
+                        <p>Аўтар: {book.author}</p>
+                        <p>Назва: {book.title}</p>
+                        <p>Год: {book.year ? book.year : 'Няма'}</p>
+                        <p>Кантакты: {book.contacts}</p>
+                        <p>Статус: дазнацца ва ўладальніка</p>
+                        <p>Умовы: дазнацца ва ўладальніка</p>
+                        <Link href={`/books/${book.id}`}>Зрабіць запыт на кнігу</Link>
+                      </Popup>
+                    </Marker>
+                  ))}
+                </>
+              )}
+            </Map>) : (<div>Надбываю каардынаты...</div>)
+          }
+
         </div>
       </div>
     </Layout>
