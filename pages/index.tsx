@@ -16,11 +16,42 @@ const Home: NextPage = ({ data }) => {
             <Head>
                 <title>Belarusian Book Crossing</title>
             </Head>
-            <div className="flex flex-col min-w-full">
+            <div className="flex flex-col min-w-full p-4">
                 <div className="flex flex-col grow items-center gap-y-10">
-                    Main Page
+                    <div className="align-self-center">
+                        <div>
+                            <label htmlFor="fid-1" className="peer-checked:bg-gray-300 p-2 w-28">Вас вітае Belarusian Book Crossing!</label>
+                            <br />
+                            <br />
+                            <label htmlFor="fid-1" className="peer-checked:bg-gray-300 p-2 w-28">Мы праект, прызначаны для таго, каб дапамагчы табе знайсці беларускія кніжкі і аднадумцаў за мяжой.</label>
+                            <br />
+                            <label htmlFor="fid-1" className="peer-checked:bg-gray-300 p-2 w-28">Уводзь назву твора ці нумар ISBN праз форму пошуку і атрымай спіс лакацый, дзе нехта гатовы падзяліцца кніжкай.</label>
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label htmlFor="fid-1" className="peer-checked:bg-gray-300 p-2 w-28">Як гэта працуе?</label>
+                            <br />
+                            <br />
+                            <label htmlFor="fid-1" className="peer-checked:bg-gray-300 p-2 w-28">Пераходзь на старонку з <Link href="/">мапай</Link> і карыстайся пошукам. Ты можаш узяць кніжку па прынцыпе book crossing, часова пазычыць яе, абмяняцца на іншую ці нават пераслаць у іншую краіну поштай.</label>
+                        </div>
+                        <br />
+                        <br />
+                        <div>
+                            <label htmlFor="fid-1" className="peer-checked:bg-gray-300 p-2 w-28">Стварай сваю бібліятэку.</label>
+                            <br />
+                            <br />
+                            <label htmlFor="fid-1" className="peer-checked:bg-gray-300 p-2 w-28">Ты можаш ананімна дадаць свае кніжкі на мапу. Такія запісы будуць выдаленыя праз 7 дзён.</label>
+                            <br />
+                            <label htmlFor="fid-1" className="peer-checked:bg-gray-300 p-2 w-28">Калі не хочаш, каб твае кантакты былі даступныя незарэгістраваным карыстальнікам, то дадай кніжку, аўтарызаваўшыся праз сацсетку.</label>
+                            <label htmlFor="fid-1" className="peer-checked:bg-gray-300 p-2 w-28">Гэта бяспечна, бо наш сэрвіс аўтаматычна карэктуе твае месцазнаходжанне: нікто не будзе ведаць твой дакладны адрас - толькі раён, дзе знаходзіцца кніга. Пакінь свае кантакты, каб іншыя карыстальнікі маглі выйсці з табой на сувязь.</label>
+                        </div>
+                        <div className='text-center w-[12rem] border rounded-sm hover:bg-gray-300 bg-gray-200 p-2 m-auto my-6'>
+                            <Link href='/map'>Пасбрабаваць</Link>
+                        </div>
+                    </div>
                 </div>
-                <Link href='https://www.patreon.com/belarusian_book_crossing' className='w-[12rem] mb-10 text-center p-1 m-auto border rounded-sm'>Падтрымаць праект</Link>
+
             </div>
         </Layout>
     )

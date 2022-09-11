@@ -83,7 +83,6 @@ const Home: NextPage = ({ data }) => {
             )}
           </Map>
         </div>
-        <Link href='https://www.patreon.com/belarusian_book_crossing' className='w-[12rem] mb-10 text-center p-1 m-auto border rounded-sm'>Падтрымаць праект</Link>
       </div>
     </Layout>
   )
