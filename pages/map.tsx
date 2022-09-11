@@ -34,7 +34,7 @@ const Home: NextPage = ({ data }) => {
   const handleChangeFilterMode = (e: React.ChangeEvent<MouseEvent>) => setFilterMode(() => e.target.value)
 
   useEffect(() => {
-    setFilteredBooks(() => filterValue ? books.filter(book => book[filterMode] && book[filterMode].includes(filterValue)) : books)
+    setFilteredBooks(() => filterValue ? books.filter(book => book[filterMode] && book[filterMode].toLowerCase().includes(filterValue.toLowerCase())) : books)
   }, [filterValue, filterMode, books])
 
   return (

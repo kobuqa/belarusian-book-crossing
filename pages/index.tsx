@@ -1,15 +1,10 @@
-//@ts-nocheck
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Layout from '../components/app-layout'
-import AddBookPopup from '../components/add-book-popup'
 import Link from 'next/link'
-import { useGeolocated } from 'react-geolocated'
-import { useBook } from '../lib/api/useBook'
 
-
-const Home: NextPage = ({ data }) => {
+const Home: NextPage = () => {
 
     return (
         <Layout>
