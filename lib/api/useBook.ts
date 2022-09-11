@@ -12,6 +12,11 @@ export const useBook = () => {
       "https://bookcrossing.hopto.org/api/books",
       book,
       {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
         httpsAgent: new https.Agent({
           rejectUnauthorized: false,
         }),
