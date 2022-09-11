@@ -11,7 +11,7 @@ import { useGeolocated } from 'react-geolocated'
 import { useBook } from '../lib/api/useBook'
 import axios from 'axios'
 import https from 'https'
-
+import Link from 'next/link'
 const DEFAULT_CENTER = [38.907132, -77.036546]
 
 const Home: NextPage = ({ data }) => {
@@ -84,7 +84,7 @@ const Home: NextPage = ({ data }) => {
             )}
           </Map>
         </div>
-        <a href='https://www.patreon.com/belarusian_book_crossing' className='w-[12rem] mb-10 text-center p-1 m-auto border rounded-sm'>Падтрымаць праект</a>
+        <Link href='https://www.patreon.com/belarusian_book_crossing' className='w-[12rem] mb-10 text-center p-1 m-auto border rounded-sm'>Падтрымаць праект</Link>
       </div>
     </Layout>
   )
@@ -94,6 +94,7 @@ export async function getServerSideProps() {
   // Fetch data from external API
   const res = await axios.get(`${process.env.API_URL}/books`, {
     httpsAgent: new https.Agent({
+      rejectUnauthorized: false
     })
   })
   // Pass data to the page via props
