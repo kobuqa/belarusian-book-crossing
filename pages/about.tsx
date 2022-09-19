@@ -11,6 +11,7 @@ export default function About() {
       </Head>
       <div className="p-4">
         З намі можна звязацца праз: <a href="mailto:belarusian.book.crossing@gmail.com">belarusian.book.crossing@gmail.com</a>
+        <br />
       </div>
       <div className="p-4">
         <h3>Каманда</h3>
