@@ -10,8 +10,9 @@ export default function About() {
         <title>Belarusian Book Crossing</title>
       </Head>
       <div className="p-4">
+        <p>
         З намі можна звязацца праз: <a href="mailto:belarusian.book.crossing@gmail.com">belarusian.book.crossing@gmail.com</a>
-        <br />
+        <p/>
       </div>
       <div className="p-4">
         <h3>Каманда</h3>
