@@ -1,47 +1,75 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import Image from 'next/image'
-import { signOut } from "next-auth/react"
-import Link from 'next/link';
+import Image from "next/image";
+import { Layout } from 'antd';
 
-
+import { Menu, MenuProps } from 'antd';
+import React, { useState } from 'react';
+import {
+    HomeOutlined,
+    AimOutlined,
+    TeamOutlined,
+    SmileOutlined
+} from '@ant-design/icons';
+import { BreadCrumbs } from '../breadcrumbs';
 type LayoutProps = {
     children: React.ReactNode,
 };
-export default function Layout({ children }: LayoutProps) {
+const { Header, Footer, Content, Sider } = Layout;
+
+type MenuItem = Required<MenuProps>['items'][number];
+function getItem(
+    label: React.ReactNode,
+    key: React.Key,
+    icon?: React.ReactNode,
+    children?: MenuItem[],
+): MenuItem {
+    return {
+        key,
+        icon,
+        children,
+        label,
+    } as MenuItem;
+}
+
+const items: MenuItem[] = [
+    getItem('Галоўная', '/', <HomeOutlined />),
+    getItem('Мапа', '/map', <AimOutlined />),
+    getItem('Пра нас', '/about', <TeamOutlined />)
+];
+
+
+
+export default function AppLayout({ children }: LayoutProps) {
     const { data } = useSession()
     const router = useRouter()
+    const [collapsed, setCollapsed] = useState(false);
+    const handleNavigate = (e: { key: string }) => router.push(e.key)
 
     return (
-        <>
-            <div className="min-h-screen flex flex-col">
-                <header className="flex justify-between p-4">
-                    <Image src="/logo.png" width={200} height={30} alt="Belarusian Book Crossing"  />
-                    <nav className="flex">
-                        <li className={`bg-gray-200 hover:bg-gray-300 p-3 border-r border-r-gray-300 cursor-pointer ${router.pathname === '/' && 'bg-gray-300'}`} onClick={() => router.push('/')}>Галоўная</li>
-                        <li className={`bg-gray-200 hover:bg-gray-300 p-3 border-r border-r-gray-300 cursor-pointer ${router.pathname === '/map' && 'bg-gray-300'}`} onClick={() => router.push('/map')}>Мапа</li>
-                        <li className={`bg-gray-200 hover:bg-gray-300 p-3  cursor-pointer ${router.pathname === '/about' && 'bg-gray-300'}`} onClick={() => router.push('/about')}>Пра нас</li>
-                    </nav>
-                    {data && (
-                        <>
-                            <div className="flex items-center gap-x-2">
-                                <p>{data.user?.name}</p>
-                                <Image alt={data.user?.name || ''} src={data.user?.image || ''} width={48} height={48} className="rounded-full" />
-                            </div>
-                            <button onClick={() => signOut()} className="border rounded-md px-4">Sign out</button>
-                        </>)
-                    }
-                </header>
-                <main className="flex grow">
-                    {children}
-                </main>
-                <div className='text-center w-[12rem] border rounded-sm hover:bg-gray-300 bg-gray-200 p-2 m-auto mb-4'>
-                    <Link href='https://www.patreon.com/belarusian_book_crossing'>Падтрымаць праект</Link>
+
+        <Layout style={{ minHeight: '100vh' }}>
+            <Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
+                <div className="h-[60px] p-2">
+                    <div className="flex items-center justify-center h-full relative">
+                        {collapsed ?
+                            <SmileOutlined style={{ fontSize: '24px', color: '#fff' }} />
+                            : <Image src="/logo.png" layout="fill" className='invert' />
+                        }
+                    </div>
                 </div>
-            </div>
-            <footer className="flex py-8 border-t border-gray-400 items-center justify-center mx-3">
-                Powered by kbq
-            </footer>
-        </>
+                <Menu theme="dark" selectedKeys={[router.pathname]} mode="inline" items={items} onClick={handleNavigate} />
+            </Sider>
+            <Layout className="site-layout">
+                <Header className="site-layout-background" style={{ padding: 0 }} />
+                <Content style={{ margin: '0 16px', flexGrow: 1 }}>
+                    <BreadCrumbs />
+                    <div style={{ padding: 24, minHeight: 360, height: '100%' }}>
+                        {children}
+                    </div>
+                </Content>
+                <Footer style={{ textAlign: 'center' }}>  Hackaton 2022</Footer>
+            </Layout>
+        </Layout>
     )
 }

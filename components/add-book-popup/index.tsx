@@ -1,11 +1,19 @@
 
-import { Dialog } from '@headlessui/react'
-import React, { useEffect, useState } from 'react';
-import TextField from '../../lib/components/text-field';
+import React, { useRef } from 'react';
 import { useGeolocated } from "react-geolocated";
 import { BookDto } from '../../lib/types';
+import { Modal, Form, Input, Button } from 'antd';
+import { randomIntFromInterval } from '../../lib/utils';
+
+const layout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+};
 
 function AddBookPopup({ isOpen, onSuccess, onClose }: any) {
+    const submitRef = useRef<HTMLButtonElement>(null)
+
+    const [form] = Form.useForm<BookDto>();
 
     const { coords } =
         useGeolocated({
@@ -15,73 +23,51 @@ function AddBookPopup({ isOpen, onSuccess, onClose }: any) {
             userDecisionTimeout: 5000,
         });
 
-    const [formValue, setFormValue] = useState<BookDto>({
-        title: '',
-        author: '',
-        isbn: '',
-        latitude: (coords ? coords.latitude : 31.02) + Math.random() / 100,
-        longitude: (coords ? coords.longitude : 72) + Math.random() / 100,
-        city: '',
-        country: '',
-        additional: '',
-        contacts: '',
-        year: 2022
-    })
-
-    const handleAdd = () => {
-        onSuccess(formValue);
-        setFormValue({
-            title: '',
-            author: '',
-            isbn: '',
-            latitude: (coords ? coords.latitude : 31.02) + Math.random() / 100,
-            longitude: (coords ? coords.longitude : 72) + Math.random() / 100,
-            city: '',
-            country: '',
-            additional: '',
-            contacts: '',
-            year: 2022
-        })
+    const handleAddBook = (values: BookDto) => {
+        onSuccess({ ...values, latitude: (coords?.latitude || 53) + randomIntFromInterval(-1, 1), longitude: (coords?.longitude || 31) + randomIntFromInterval(-1, 1) })
         onClose()
     }
 
-    useEffect(() => {
-        setFormValue(prev => ({ ...prev, latitude: (coords ? coords.latitude : 31.02) + Math.random() / 100, longitude: (coords ? coords.longitude : 72) + Math.random() / 100 }))
-    }, [coords?.latitude, coords?.longitude, coords])
+    const handleSubmit = () => submitRef.current?.click()
 
     return (
-        <Dialog open={isOpen} onClose={onClose} className="p-4 absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-[1000] border rounded-lg bg-gray-100 shadow-xl">
-            <Dialog.Panel>
-                <Dialog.Title>Дадаць кнігу</Dialog.Title>
-                <div className="flex flex-col gap-y-4 my-10 mx-5">
-                    <label htmlFor="book-title" className="flex items-center justify-between">Назва
-                        <TextField value={formValue.title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormValue(prev => ({ ...prev, title: e.target.value }))} id="book-title" />
-                    </label>
-                    <label htmlFor="book-author" className="flex items-center gap-x-4">Аўтар
-                        <TextField value={formValue.author} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormValue(prev => ({ ...prev, author: e.target.value }))} id="book-author" />
-                    </label>
-                    <label htmlFor="book-year" className="flex items-center justify-between">Год
-                        <TextField type="number" value={formValue.year} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormValue(prev => ({ ...prev, year: Number(e.target.value) }))} id="book-year" />
-                    </label>
-                    <label htmlFor="book-isbn" className="flex items-center justify-between">ISBN
-                        <TextField value={formValue.isbn} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormValue(prev => ({ ...prev, isbn: e.target.value }))} id="book-isbn" />
-                    </label>
-                    <label htmlFor="book-country" className="flex items-center justify-between">Краiна
-                        <TextField value={formValue.country} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormValue(prev => ({ ...prev, country: e.target.value }))} id="book-country" />
-                    </label>
-                    <label htmlFor="book-city" className="flex items-center justify-between">Горад
-                        <TextField value={formValue.city} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormValue(prev => ({ ...prev, city: e.target.value }))} id="book-city" />
-                    </label>
-                    <label htmlFor="book-contacts" className="flex items-center justify-between">Contacts
-                        <TextField value={formValue.contacts} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormValue(prev => ({ ...prev, contacts: e.target.value }))} id="book-contacts" />
-                    </label>
-                </div>
-                <div className="flex justify-around">
-                    <button onClick={handleAdd} className="border border-black p-2 rounded-lg bg-white">Дадаць</button>
-                    <button onClick={onClose} className="border border-black p-2 rounded-lg bg-white">Скасаваць</button>
-                </div>
-            </Dialog.Panel>
-        </Dialog>
+        <Modal
+            title="Дадаць кнігу"
+            open={isOpen}
+            onOk={handleSubmit}
+            onCancel={onClose}
+            okText="Дадаць"
+            cancelText="Скасаваць"
+        >
+            <Form {...layout} form={form} onFinish={handleAddBook}>
+                <Form.Item name="title" label="Назва" rules={[{ required: true, pattern: new RegExp(/^[a-zA-Zа-яА-Я]+$/ig), message: "Пожалуйста, введите корректное название книги" }]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item name="author" label="Аўтар" rules={[{ required: true, pattern: new RegExp(/^[a-zA-Zа-яА-Я]+$/ig), message: "Пожалуйста, введите корректное имя автора" }]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item name="year" label="Год" rules={[{ required: true, pattern: new RegExp(/^\d+$/ig), message: "Пожалуйста, введите корректный год" }]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item name="isbn" label="ISBN" rules={[{ required: false }]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item name="country" label="Краiна" rules={[{ required: false }]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item name="city" label="Горад" rules={[{ required: false }]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item name="contacts" label="Кантакты" rules={[{ required: true, message: "Пожалуйста, укажите как с Вами связаться" }]}>
+                    <Input />
+                </Form.Item>
+                <Form.Item>
+                    <Button htmlType="submit" className="invisible" ref={submitRef}>Submit</Button>
+                </Form.Item>
+
+            </Form>
+        </Modal >
+
     )
 }
 

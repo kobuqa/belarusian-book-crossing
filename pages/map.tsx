@@ -3,14 +3,17 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import React, { useEffect, useState } from 'react'
 import Layout from '../components/app-layout'
-import Map from '../components/map'
 import AddBookPopup from '../components/add-book-popup'
-import TextField from '../lib/components/text-field'
-import Link from 'next/link'
+import { Input, Button } from 'antd';
 import { useGeolocated } from 'react-geolocated'
 import { useBook } from '../lib/api/useBook'
 import axios from 'axios'
 import https from 'https'
+import Map from '../components/map'
+import { Spinner } from '../lib/components/spinner'
+
+
+const { Search } = Input;
 
 const Home: NextPage = ({ data }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -40,51 +43,25 @@ const Home: NextPage = ({ data }) => {
   return (
     <Layout>
       <Head>
-        <title>Belarusian Book Crossing</title>
+        <title>Мапа</title>
       </Head>
       <AddBookPopup isOpen={isOpen} onSuccess={addBook} onClose={() => setIsOpen(false)} />
       <div className="flex flex-col min-w-full">
         <div className="flex flex-col grow items-center gap-y-10">
           <div className="flex gap-x-4">
-            <TextField placeholder='Start typing' onChange={handleChangeFilterValue} value={filterValue} />
-            <div className="flex border border-black rounded-lg overflow-hidden">
-              <div className="grow flex text-center">
-                <input id="fid-1" type="radio" name="radio" value="title" checked={filterMode === 'title'} className="hidden peer" onChange={handleChangeFilterMode} />
-                <label htmlFor="fid-1" className="peer-checked:bg-gray-300 p-2 cursor-pointer w-28">Назва кнігі</label>
-              </div>
-              <div className="flex grow text-center border-l border-black">
-                <input id="fid-2" type="radio" name="radio" value="isbn" checked={filterMode === 'isbn'} className="hidden peer" onChange={handleChangeFilterMode} />
-                <label htmlFor="fid-2" className="peer-checked:bg-gray-300 p-2 cursor-pointer w-28">ISBN</label>
-              </div>
-            </div>
-          </div>
-          <button className="border border-black p-2 rounded-lg" onClick={() => setIsOpen(true)}>Дадаць кнігу</button>
-          {coords ?
-            (<Map className="w-full h-[40rem]" center={[coords.latitude, coords.longitude]} zoom={6}>
-              {({ TileLayer, Marker, Popup }) => (
-                <>
-                  <TileLayer
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-                  />
-                  {filteredBooks.map(book => (
-                    <Marker position={[book.latitude, book.longitude]} key={book.id}>
-                      <Popup>
-                        <p>Аўтар: {book.author}</p>
-                        <p>Назва: {book.title}</p>
-                        <p>Год: {book.year ? book.year : 'Няма'}</p>
-                        <p>Кантакты: {book.contacts}</p>
-                        <p>Статус: дазнацца ва ўладальніка</p>
-                        <p>Умовы: дазнацца ва ўладальніка</p>
-                        <Link href={`/books/${book.id}`}>Зрабіць запыт на кнігу</Link>
-                      </Popup>
-                    </Marker>
-                  ))}
-                </>
-              )}
-            </Map>) : (<div>Надбываю каардынаты...</div>)
-          }
+            <Search
+              placeholder="Пачнi шукаць"
+              allowClear
+              enterButton="Знайсцi"
+              size="large"
+              value={filterValue}
+              onChange={handleChangeFilterValue}
 
+              onSearch={() => { }}
+            />
+          </div>
+          <Button type="primary" onClick={() => setIsOpen(true)}>Дадаць кнігу</Button>
+          {coords ? <Map coords={[coords.latitude, coords.longitude]} items={filteredBooks} /> : <div>Надбываю каардынаты... <Spinner /></div>}
         </div>
       </div>
     </Layout>
