@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Image from "next/image";
 import { Layout } from 'antd';
 
-import { Menu, MenuProps } from 'antd';
+import { Menu, MenuProps, Button } from 'antd';
 import React, { useState } from 'react';
 import {
     HomeOutlined,
@@ -68,7 +68,7 @@ export default function AppLayout({ children }: LayoutProps) {
                         {children}
                     </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>  Hackaton 2022</Footer>
+                <Footer style={{ textAlign: 'center' }}>  Hackaton 2022   <Button className="ml-2" href='https://www.patreon.com/belarusian_book_crossing'>Падтрымаць праект</Button></Footer>
             </Layout>
         </Layout>
     )
